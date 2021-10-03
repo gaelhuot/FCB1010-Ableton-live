@@ -26,11 +26,12 @@ A little procedure is necessary on your FCB1010 to install the preset (also expl
 2. Press the "Down" pedal once to enter the "Config" mode
 3. Press pedal 7 "SYSEX RCV".
 
-Demonstration: 
-[GIF]
-
 You can now send the preset to the FCB1010:
-[PHOTO]  
+![FCB1010_Send](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_Send.jpg?raw=true)
+
+
+FCB1010 Manager tutorial :
+![FCB1010_manager_tuto](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_manager_tuto.jpg?raw=true)
 
 ### Setup for Ableton
 
@@ -46,14 +47,29 @@ Complete path :
 #### Configuration
 Plug in your FCB1010 and open Ableton.
 **Important information** : I personally don't plug the "MIDI IN" on the FCB1010, I already had a lot of problems with other scripts, so I just use the "MIDI OUT":
-[PHOTO]
+![FCB1010_Midi_in_out](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_Midi_in_out.jpg?raw=true)
 
 Allez dans "Options->Preferences->Link Tempo MIDI".
 Dans la liste "Control surface", vous devriez maintenant voir "FCB1010" 
 Choisissez le. Si le rectangle bleu apparait, félicitations, c'est installé ! 
 
 ## Actual mapping
-[PHOTOS]
+![FCB1010_map_0](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_0.jpg?raw=true)
+![FCB1010_map_9](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_9.jpg?raw=true)
+
+![FCB1010_map_1_8](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_1_8.jpg?raw=true)
+I think some explanations would be good for this one: 
+Let's take this config :
+![Ableton_Sess](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/Ableton_Sess.jpg?raw=true)
+This image represents the FCB1010 session in Ableton. This is how it works:
+- If I press footswitch 1 of bank 1, this will launch the "1A" clip;
+- If I press footswitch 2 of bank 1, this will launch the "1B" clip;
+- If I press footswitch 1 of bank 2, this will launch the "2A" clip;
+- If I press footswitch 2 of bank 2, this will launch the "2B" clip;
+- If I press footswitch 4 of bank 7, this will launch the "7D" clip;
+- You got the idea !
+
+
 
 ## Custom mapping
 To edit the current mapping, go to the python file ***"MIDI_Map.py"*** of the Remote Script. 
@@ -83,12 +99,12 @@ The idea is that this editor generates a JSON file (for example) which is then r
 
 This would prevent people who are not very familiar with the code from having to spend hours wondering : "What is this devilry? Why is he talking about pythons and snakes for something on Ableton?" 
 
-### Smart mapping
+### Smart mapping ??
 Overall, simplify the use and navigation as much as possible
 
 ## Ressources
 
 - Remote script : [https://github.com/laidlaw42/ableton-live-midi-remote-scripts](https://github.com/laidlaw42/ableton-live-midi-remote-scripts)
 - Original FCB1020 repository : [https://github.com/petr-ruca/FCB1010-Remote-midi-script-for-Ableton-Live-10](https://github.com/petr-ruca/FCB1010-Remote-midi-script-for-Ableton-Live-10)
-- Documentation pour Ableton 10 : [https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml](https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml)
+- Documentation for Ableton 10 : [https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml](https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml)
 - How to make a strong Coffee (Believe me, it's useful when you have to read the Python "Doc" of Ableton) : [How to Make Strong Coffee](https://enjoyjava.com/how-to-make-strong-coffee/)

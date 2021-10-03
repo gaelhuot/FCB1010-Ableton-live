@@ -15,8 +15,7 @@ SCENE_OFFSET = 0  # offset from the top of linked session origin (no auto-join)
 # Duplicate assignments are permitted
 
 BUTTONCHANNEL = 0  # Channel assignment for all mapped buttons/pads; valid range is 0 to 15
-# Message type for buttons/pads; set to 0 for MIDI Notes, 1 for CCs.
-MESSAGETYPE = 0
+MESSAGETYPE = 0  # Message type for buttons/pads; set to 0 for MIDI Notes, 1 for CCs.
 # When using CCs for buttons/pads, set BUTTONCHANNEL and SLIDERCHANNEL to different values.
 
 # General
@@ -91,17 +90,26 @@ SELCLIPLAUNCH = 3  # Selected clip launch
 SELCLIPSTOP = 2  # Selected clip stop
 SELTRACKSOLO = 7  # Solo selected track
 SELTRACKMUTE = 8  # Mute selected track
+SELTRACKSTOP = 9  # Stop selected track
 
 STOPALLCLIPS = -1  # Stop all clips
 
 # 8x5 Matrix note assignments
 # Track no.:     1   2   3   4   5   6   7   8
-CLIPNOTEMAP = ((10, 11, 12, 13, 14, 15, 16, 17),  # Row 1
-               (20, 21, 22, 23, 24, 25, 26, 27),  # Row 2
-               (30, 31, 32, 33, 34, 35, 36, 37),  # Row 3
-               (40, 41, 42, 43, 44, 45, 46, 47),  # Row 4
-               (50, 51, 52, 53, 54, 55, 56, 57),  # Row 5
+CLIPNOTEMAP = ((10, 20, 30, 40, 50, 60, 70, 80),  # Row 1
+               (11, 21, 31, 41, 51, 61, 71, 81),  # Row 2
+               (12, 22, 32, 42, 52, 62, 72, 82),  # Row 3
+               (13, 23, 33, 43, 53, 63, 73, 83),  # Row 4
+               (14, 24, 34, 44, 54, 64, 74, 84),  # Row 5
                )
+
+# TODO
+# CLIPSTOPMAP = ((15, 25, 35, 45, 55, 65, 75, 85),  # Row 1
+#                (16, 26, 36, 46, 56, 66, 76, 86),  # Row 2
+#                (17, 27, 37, 47, 57, 67, 77, 87),  # Row 3
+#                (18, 28, 38, 48, 58, 68, 78, 88),  # Row 4
+#                (19, 29, 39, 49, 59, 69, 79, 89),  # Row 5
+#                )
 
 # Track Control
 MASTERSEL = -1  # Master track select

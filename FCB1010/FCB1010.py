@@ -1,7 +1,7 @@
 # http://remotescripts.blogspot.com
 # Original repository : https://github.com/petr-ruca/FCB1010-Remote-midi-script-for-Ableton-Live-10
 # FCB1010 Ableton 11+ script
-# Ableton DOC (10.1.19) : https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml
+# Ableton DOC (10.1.19) : https://structure-void.com/PythonLiveAPI_documentation/Live10.1.19.xml 
 
 from __future__ import with_statement
 
@@ -25,12 +25,10 @@ from .MIDI_Map import *
 #MIDI_CC_TYPE = 1
 #MIDI_PB_TYPE = 2
 
-
 class FCB1010(ControlSurface):
     __doc__ = " Script for FCB1010 in APC emulation mode "
 
     _active_instances = []
-
     def _combine_active_instances():
         track_offset = 0
         scene_offset = 0
@@ -41,7 +39,7 @@ class FCB1010(ControlSurface):
 
     def __init__(self, c_instance):
         ControlSurface.__init__(self, c_instance)
-        # self.set_suppress_rebuild_requests(True)
+        #self.set_suppress_rebuild_requests(True)
         with self.component_guard():
             self._note_map = []
             self._ctrl_map = []
@@ -54,10 +52,11 @@ class FCB1010(ControlSurface):
             self._session.set_mixer(self._mixer)
             self._setup_device_and_transport_control()
             self.set_highlighting_session_component(self._session)
-            # self.set_suppress_rebuild_requests(False)
+            #self.set_suppress_rebuild_requests(False)
         self._pads = []
         self._load_pad_translations()
         self._do_combine()
+
 
     def disconnect(self):
         self._note_map = None
@@ -70,15 +69,18 @@ class FCB1010(ControlSurface):
         self._mixer = None
         ControlSurface.disconnect(self)
 
+
     def _do_combine(self):
         if self not in FCB1010._active_instances:
             FCB1010._active_instances.append(self)
             FCB1010._combine_active_instances()
 
+
     def _do_uncombine(self):
         if ((self in FCB1010._active_instances) and FCB1010._active_instances.remove(self)):
             self._session.unlink()
             FCB1010._combine_active_instances()
+
 
     def _activate_combination_mode(self, track_offset, scene_offset):
         if TRACK_OFFSET != -1:
@@ -87,46 +89,43 @@ class FCB1010(ControlSurface):
             scene_offset = SCENE_OFFSET
         self._session.link_with_track_offset(track_offset, scene_offset)
 
+
     def _setup_session_control(self):
         is_momentary = True
         self._session = SpecialSessionComponent(8, 5)
         self._session.name = 'Session_Control'
-        self._session.set_track_bank_buttons(
-            self._note_map[SESSIONRIGHT], self._note_map[SESSIONLEFT])
-        self._session.set_scene_bank_buttons(
-            self._note_map[SESSIONDOWN], self._note_map[SESSIONUP])
-        self._session.set_select_buttons(
-            self._note_map[SCENEDN], self._note_map[SCENEUP])
-        self._scene_launch_buttons = [
-            self._note_map[SCENELAUNCH[index]] for index in range(5)]
-        self._track_stop_buttons = [
-            self._note_map[TRACKSTOP[index]] for index in range(8)]
+        self._session.set_track_bank_buttons(self._note_map[SESSIONRIGHT], self._note_map[SESSIONLEFT])
+        self._session.set_scene_bank_buttons(self._note_map[SESSIONDOWN], self._note_map[SESSIONUP])
+        self._session.set_select_buttons(self._note_map[SCENEDN], self._note_map[SCENEUP])
+        self._scene_launch_buttons = [self._note_map[SCENELAUNCH[index]] for index in range(5) ]
+        self._track_stop_buttons = [self._note_map[TRACKSTOP[index]] for index in range(8) ]
         self._session.set_stop_all_clips_button(self._note_map[STOPALLCLIPS])
-        self._session.set_stop_track_clip_buttons(
-            tuple(self._track_stop_buttons))
-        # self._session.set_stop_track_clip_value(2)
+        self._session.set_stop_track_clip_buttons(tuple(self._track_stop_buttons))
+        #self._session.set_stop_track_clip_value(2)
         self._session.selected_scene().name = 'Selected_Scene'
-        self._session.selected_scene().set_launch_button(
-            self._note_map[SELSCENELAUNCH])
+        self._session.selected_scene().set_launch_button(self._note_map[SELSCENELAUNCH])
         self._session.set_slot_launch_button(self._note_map[SELCLIPLAUNCH])
         self._session.set_slot_stop_button(self._note_map[SELCLIPSTOP])
+        self._session.set_track_stop_button(self._note_map[SELTRACKSTOP])
         for scene_index in range(5):
             scene = self._session.scene(scene_index)
             scene.name = 'Scene_' + str(scene_index)
-            button_row = []
+            button_row_launch = []
+            # button_row_stop = []
             scene.set_launch_button(self._scene_launch_buttons[scene_index])
             scene.set_triggered_value(2)
             for track_index in range(8):
-                button = self._note_map[CLIPNOTEMAP[scene_index][track_index]]
-                button_row.append(button)
+                buttonLaunch = self._note_map[CLIPNOTEMAP[scene_index][track_index]]
+                # buttonStop = self._note_map[CLIPSTOPMAP[scene_index][track_index]]
+                button_row_launch.append(buttonLaunch)
+                # button_row_stop.append(buttonStop)
                 clip_slot = scene.clip_slot(track_index)
-                clip_slot.name = str(track_index) + \
-                    '_Clip_Slot_' + str(scene_index)
-                clip_slot.set_launch_button(button)
+                clip_slot.name = str(track_index) + '_Clip_Slot_' + str(scene_index)
+                clip_slot.set_launch_button(buttonLaunch)
+                # clip_slot.set_stop_button(buttonStop)
         self._session_zoom = SpecialZoomingComponent(self._session)
         self._session_zoom.name = 'Session_Overview'
-        self._session_zoom.set_nav_buttons(
-            self._note_map[ZOOMUP], self._note_map[ZOOMDOWN], self._note_map[ZOOMLEFT], self._note_map[ZOOMRIGHT])
+        self._session_zoom.set_nav_buttons(self._note_map[ZOOMUP], self._note_map[ZOOMDOWN], self._note_map[ZOOMLEFT], self._note_map[ZOOMRIGHT])
 
     def _setup_mixer_control(self):
         is_momentary = True
@@ -135,18 +134,13 @@ class FCB1010(ControlSurface):
         self._mixer.master_strip().name = 'Master_Channel_Strip'
         self._mixer.master_strip().set_select_button(self._note_map[MASTERSEL])
         self._mixer.selected_strip().name = 'Selected_Channel_Strip'
-        self._mixer.set_select_buttons(
-            self._note_map[TRACKRIGHT], self._note_map[TRACKLEFT])
+        self._mixer.set_select_buttons(self._note_map[TRACKRIGHT], self._note_map[TRACKLEFT])
         self._mixer.set_crossfader_control(self._ctrl_map[CROSSFADER])
         self._mixer.set_prehear_volume_control(self._ctrl_map[CUELEVEL])
-        self._mixer.master_strip().set_volume_control(
-            self._ctrl_map[MASTERVOLUME])
-        self._mixer.selected_strip().set_arm_button(
-            self._note_map[SELTRACKARM])
-        self._mixer.selected_strip().set_solo_button(
-            self._note_map[SELTRACKSOLO])
-        self._mixer.selected_strip().set_mute_button(
-            self._note_map[SELTRACKMUTE])
+        self._mixer.master_strip().set_volume_control(self._ctrl_map[MASTERVOLUME])
+        self._mixer.selected_strip().set_arm_button(self._note_map[SELTRACKARM])
+        self._mixer.selected_strip().set_solo_button(self._note_map[SELTRACKSOLO])
+        self._mixer.selected_strip().set_mute_button(self._note_map[SELTRACKMUTE])
         for track in range(8):
             strip = self._mixer.channel_strip(track)
             strip.name = 'Channel_Strip_' + str(track)
@@ -156,9 +150,9 @@ class FCB1010(ControlSurface):
             strip.set_select_button(self._note_map[TRACKSEL[track]])
             strip.set_volume_control(self._ctrl_map[TRACKVOL[track]])
             strip.set_pan_control(self._ctrl_map[TRACKPAN[track]])
-            strip.set_send_controls(
-                (self._ctrl_map[TRACKSENDA[track]], self._ctrl_map[TRACKSENDB[track]], self._ctrl_map[TRACKSENDC[track]]))
+            strip.set_send_controls((self._ctrl_map[TRACKSENDA[track]], self._ctrl_map[TRACKSENDB[track]], self._ctrl_map[TRACKSENDC[track]]))
             strip.set_invert_mute_feedback(True)
+
 
     def _setup_device_and_transport_control(self):
         is_momentary = True
@@ -174,27 +168,22 @@ class FCB1010(ControlSurface):
         if None not in device_param_controls:
             self._device.set_parameter_controls(tuple(device_param_controls))
         self._device.set_on_off_button(self._note_map[DEVICEONOFF])
-        self._device.set_bank_nav_buttons(
-            self._note_map[DEVICEBANKNAVLEFT], self._note_map[DEVICEBANKNAVRIGHT])
+        self._device.set_bank_nav_buttons(self._note_map[DEVICEBANKNAVLEFT], self._note_map[DEVICEBANKNAVRIGHT])
         self._device.set_lock_button(self._note_map[DEVICELOCK])
         self.set_device_component(self._device)
 
         detail_view_toggler = DetailViewControllerComponent()
         detail_view_toggler.name = 'Detail_View_Control'
-        detail_view_toggler.set_device_clip_toggle_button(
-            self._note_map[CLIPTRACKVIEW])
-        detail_view_toggler.set_detail_toggle_button(
-            self._note_map[DETAILVIEW])
-        detail_view_toggler.set_device_nav_buttons(
-            self._note_map[DEVICENAVLEFT], self._note_map[DEVICENAVRIGHT])
+        detail_view_toggler.set_device_clip_toggle_button(self._note_map[CLIPTRACKVIEW])
+        detail_view_toggler.set_detail_toggle_button(self._note_map[DETAILVIEW])
+        detail_view_toggler.set_device_nav_buttons(self._note_map[DEVICENAVLEFT], self._note_map[DEVICENAVRIGHT] )
 
         transport = SpecialTransportComponent()
         transport.name = 'Transport'
         transport.set_play_button(self._note_map[PLAY])
         transport.set_stop_button(self._note_map[STOP])
         transport.set_record_button(self._note_map[REC])
-        transport.set_nudge_buttons(
-            self._note_map[NUDGEUP], self._note_map[NUDGEDOWN])
+        transport.set_nudge_buttons(self._note_map[NUDGEUP], self._note_map[NUDGEDOWN])
         transport.set_undo_button(self._note_map[UNDO])
         transport.set_redo_button(self._note_map[REDO])
         transport.set_tap_tempo_button(self._note_map[TAPTEMPO])
@@ -203,11 +192,10 @@ class FCB1010(ControlSurface):
         transport.set_metronome_button(self._note_map[METRONOME])
         transport.set_tempo_control(self._ctrl_map[TEMPOCONTROL])
         transport.set_loop_button(self._note_map[LOOP])
-        transport.set_seek_buttons(
-            self._note_map[SEEKFWD], self._note_map[SEEKRWD])
-        transport.set_punch_buttons(
-            self._note_map[PUNCHIN], self._note_map[PUNCHOUT])
-        # transport.set_song_position_control(self._ctrl_map[SONGPOSITION]) #still not implemented as of Live 8.1.6
+        transport.set_seek_buttons(self._note_map[SEEKFWD], self._note_map[SEEKRWD])
+        transport.set_punch_buttons(self._note_map[PUNCHIN], self._note_map[PUNCHOUT])
+        ##transport.set_song_position_control(self._ctrl_map[SONGPOSITION]) #still not implemented as of Live 8.1.6
+
 
     def _on_selected_track_changed(self):
         ControlSurface._on_selected_track_changed(self)
@@ -219,6 +207,7 @@ class FCB1010(ControlSurface):
             self.song().view.select_device(device_to_select)
         self._device_component.set_device(device_to_select)
 
+
     def _load_pad_translations(self):
         if -1 not in DRUM_PADS:
             pad = []
@@ -228,15 +217,14 @@ class FCB1010(ControlSurface):
                     self._pads.append(pad)
             self.set_pad_translations(tuple(self._pads))
 
+
     def _load_MIDI_map(self):
         is_momentary = True
         for note in range(128):
-            button = ButtonElement(
-                is_momentary, MESSAGETYPE, BUTTONCHANNEL, note)
+            button = ButtonElement(is_momentary, MESSAGETYPE, BUTTONCHANNEL, note)
             button.name = 'Note_' + str(note)
             self._note_map.append(button)
-        # add None to the end of the list, selectable with [-1]
-        self._note_map.append(None)
+        self._note_map.append(None) #add None to the end of the list, selectable with [-1]
         if MESSAGETYPE == MIDI_CC_TYPE and BUTTONCHANNEL == SLIDERCHANNEL:
             for ctrl in range(128):
                 self._ctrl_map.append(None)
@@ -246,3 +234,5 @@ class FCB1010(ControlSurface):
                 control.name = 'Ctrl_' + str(ctrl)
                 self._ctrl_map.append(control)
             self._ctrl_map.append(None)
+
+

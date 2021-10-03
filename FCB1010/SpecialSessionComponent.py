@@ -14,17 +14,24 @@ class SpecialSessionComponent(SessionComponent):
         SessionComponent.__init__(self, num_tracks, num_scenes)
         self._slot_launch_button = None
         self._slot_stop_button = None
+        self._track_stop_button = None
+
 
     def disconnect(self):
         SessionComponent.disconnect(self)
         if (self._slot_launch_button != None):
-            self._slot_launch_button.remove_value_listener(
-                self._slot_launch_value)
+            self._slot_launch_button.remove_value_listener(self._slot_launch_value)
             self._slot_launch_button = None
 
         if (self._slot_stop_button != None):
             self._slot_stop_button.remove_value_listener(self._slot_stop_value)
             self._slot_stop_button = None
+
+        if (self._track_stop_button != None):
+            self._track_stop_button.remove_value_listener(self._track_stop_value)
+            self._track_stop_button = None
+
+
 
     def link_with_track_offset(self, track_offset, scene_offset):
         assert (track_offset >= 0)
@@ -34,22 +41,23 @@ class SpecialSessionComponent(SessionComponent):
         self.set_offsets(track_offset, scene_offset)
         self._link()
 
+
     def unlink(self):
         if self._is_linked():
             self._unlink()
+
 
     def set_slot_launch_button(self, button):
         assert ((button == None) or isinstance(button, ButtonElement))
         if (self._slot_launch_button != button):
             if (self._slot_launch_button != None):
-                self._slot_launch_button.remove_value_listener(
-                    self._slot_launch_value)
+                self._slot_launch_button.remove_value_listener(self._slot_launch_value)
             self._slot_launch_button = button
             if (self._slot_launch_button != None):
-                self._slot_launch_button.add_value_listener(
-                    self._slot_launch_value)
+                self._slot_launch_button.add_value_listener(self._slot_launch_value)
 
             self.update()
+
 
     def _slot_launch_value(self, value):
         assert (value in range(128))
@@ -59,16 +67,17 @@ class SpecialSessionComponent(SessionComponent):
                 if (self.song().view.highlighted_clip_slot != None):
                     self.song().view.highlighted_clip_slot.fire()
 
+
+
+
     def set_slot_stop_button(self, button):
         assert ((button == None) or isinstance(button, ButtonElement))
         if (self._slot_stop_button != button):
             if (self._slot_stop_button != None):
-                self._slot_stop_button.remove_value_listener(
-                    self._slot_stop_value)
+                self._slot_stop_button.remove_value_listener(self._slot_stop_value)
             self._slot_stop_button = button
             if (self._slot_stop_button != None):
-                self._slot_stop_button.add_value_listener(
-                    self._slot_stop_value)
+                self._slot_stop_button.add_value_listener(self._slot_stop_value)
 
             self.update()
 
@@ -79,6 +88,29 @@ class SpecialSessionComponent(SessionComponent):
             if ((value != 0) or (not self._slot_stop_button.is_momentary())):
                 if (self.song().view.highlighted_clip_slot != None):
                     self.song().view.highlighted_clip_slot.stop()
+
+
+
+
+    def set_track_stop_button(self, button):
+        assert ((button == None) or isinstance(button, ButtonElement))
+        if (self._track_stop_button != button):
+            if (self._track_stop_button != None):
+                self._track_stop_button.remove_value_listener(self._track_stop_value)
+            self._track_stop_button = button
+            if (self._track_stop_button != None):
+                self._track_stop_button.add_value_listener(self._track_stop_value)
+
+            self.update()
+
+    def _track_stop_value(self, value):
+        assert (value in range(128))
+        assert (self._track_stop_button != None)
+        if self.is_enabled():
+            if ((value != 0) or (not self._track_stop_button.is_momentary())):
+                if (self.song() != None):
+                    self.song().view.selected_track.stop_all_clips()
+
 
 
 # local variables:

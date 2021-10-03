@@ -27,10 +27,12 @@ A little procedure is necessary on your FCB1010 to install the preset (also expl
 3. Press pedal 7 "SYSEX RCV".
 
 You can now send the preset to the FCB1010:
+
 ![FCB1010_Send](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_Send.jpg?raw=true)
 
 
 FCB1010 Manager tutorial :
+
 ![FCB1010_manager_tuto](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_manager_tuto.jpg?raw=true)
 
 ### Setup for Ableton
@@ -47,6 +49,7 @@ Complete path :
 #### Configuration
 Plug in your FCB1010 and open Ableton.
 **Important information** : I personally don't plug the "MIDI IN" on the FCB1010, I already had a lot of problems with other scripts, so I just use the "MIDI OUT":
+
 ![FCB1010_Midi_in_out](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_Midi_in_out.jpg?raw=true)
 
 Allez dans "Options->Preferences->Link Tempo MIDI".
@@ -54,13 +57,19 @@ Dans la liste "Control surface", vous devriez maintenant voir "FCB1010"
 Choisissez le. Si le rectangle bleu apparait, félicitations, c'est installé ! 
 
 ## Actual mapping
-![FCB1010_map_0](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_0.jpg?raw=true)
-![FCB1010_map_9](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_9.jpg?raw=true)
 
+-------------------------------------
+![FCB1010_map_0](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_0.jpg?raw=true)
+-------------------------------------
+![FCB1010_map_9](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_9.jpg?raw=true)
+-------------------------------------
 ![FCB1010_map_1_8](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_map_1_8.jpg?raw=true)
-I think some explanations would be good for this one: 
-Let's take this config :
+-------------------------------------
+I think some explanations would be good for this one. Let's take this config :
+
+-------------------------------------
 ![Ableton_Sess](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/Ableton_Sess.jpg?raw=true)
+-------------------------------------
 This image represents the FCB1010 session in Ableton. This is how it works:
 - If I press footswitch 1 of bank 1, this will launch the "1A" clip;
 - If I press footswitch 2 of bank 1, this will launch the "1B" clip;
@@ -78,11 +87,11 @@ Each command corresponds to a Variable.
 Example : 
 	
     
-    SESSIONRIGHT =  91 # Correspond à la note Midi "91".
+    SESSIONRIGHT =  91 # Listen to Midi note "91".
     
 At the bottom of the script is the mapping for the expression pedals (CF *TRACKVOL* and *PARAMCONTROL*).
 
-Le preset installé sur le FCB1010 bind chaque pédale sur une note midi :
+The installed preset on the FCB1010 bind each footswitch on a unique Midi note :
 Example : 
 - Bank 0, Footswitch 1 = 0
 - Bank 0, Footswitch 5 = 0
@@ -100,7 +109,7 @@ The idea is that this editor generates a JSON file (for example) which is then r
 This would prevent people who are not very familiar with the code from having to spend hours wondering : "What is this devilry? Why is he talking about pythons and snakes for something on Ableton?" 
 
 ### Smart mapping ??
-Overall, simplify the use and navigation as much as possible
+Overall, simplify the use and clip/track/sessions navigation and actions as much as possible
 
 ## Ressources
 

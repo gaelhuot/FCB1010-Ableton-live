@@ -52,9 +52,9 @@ Plug in your FCB1010 and open Ableton.
 
 ![FCB1010_Midi_in_out](https://github.com/gaelhuot/FCB1010-Ableton-live/blob/master/_Assets/FCB1010_Midi_in_out.jpg?raw=true)
 
-Allez dans "Options->Preferences->Link Tempo MIDI".
-Dans la liste "Control surface", vous devriez maintenant voir "FCB1010" 
-Choisissez le. Si le rectangle bleu apparait, félicitations, c'est installé ! 
+Go in "Options->Preferences->Link Tempo MIDI".
+Int the "Control surface" list, you should now see "FCB1010" 
+Choose it and if the blue session appears.. Congrats, you're done ! 
 
 ## Actual mapping
 
